@@ -1,0 +1,1 @@
+# GO_mysql_map_result
