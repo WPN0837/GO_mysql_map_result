@@ -3,30 +3,13 @@ package dbMap
 import (
 	. "database/sql"
 	"fmt"
-	"github.com/go-sql-driver/mysql"
+	_ "github.com/go-sql-driver/mysql"
 	"time"
 )
 
 //数据库类型
 const driverName = "mysql"
 
-func init() {
-	/*
-		注册mysql驱动
-	*/
-	drivers := Drivers()
-	f := true
-	for i := range drivers {
-		if drivers[i] == driverName {
-			f = false
-			break
-		}
-	}
-	if f {
-		Register(driverName, mysql.MySQLDriver{})
-		fmt.Println("加载驱动")
-	}
-}
 
 type ConnectPool struct {
 	USERNAME string
