@@ -21,6 +21,15 @@ type ConnectPool struct {
 	con      *DB
 }
 
+func NewConnectPool(username, password, host, port, database string) *ConnectPool {
+	/**
+	username
+	返回一个连接池的地址
+	 */
+	return &ConnectPool{
+		username, password, "tcp", host, port, database, nil,
+	}
+}
 func (c *ConnectPool) connect() error {
 	ServerInfo := fmt.Sprintf("%s:%s@%s(%s:%s)/%s?charset=utf8", c.USERNAME, c.PASSWORD, c.NETWORK, c.SERVER, c.PORT, c.DATABASE)
 	DB, err := Open(driverName, ServerInfo)
@@ -33,7 +42,7 @@ func (c *ConnectPool) connect() error {
 	c.con = DB
 	return nil
 }
-func (c ConnectPool) Get() (*DB, error) {
+func (c *ConnectPool) Get() (*DB, error) {
 	/**
 	返回一个数据库连接
 	*/
@@ -43,7 +52,7 @@ func (c ConnectPool) Get() (*DB, error) {
 	err := c.connect()
 	return c.con, err
 }
-func (c ConnectPool) Close() {
+func (c *ConnectPool) Close() {
 	/**
 	关闭数据库连接
 	*/
